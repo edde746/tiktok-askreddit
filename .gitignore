@@ -1,0 +1,7 @@
+__pycache__/
+geckodriver.log
+*.cookies
+*TEMP*.mp3
+render/
+output/
+backgrounds/
