@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from utils import config
 
 # Huge credits to redianmarku
 # https://github.com/redianmarku/tiktok-autouploader
@@ -18,7 +19,7 @@ def upload_to_tiktok(name,title):
     except:
         pass
 
-    for cookie in open('tiktok.cookies','r').read().split('; '):
+    for cookie in config['tiktok_cookies'].split('; '):
         data = cookie.split('=')
         bot.add_cookie({'name':data[0],'value':data[1]})
 

@@ -1,7 +1,8 @@
 import asyncio,tts,os,video,requests
-from tokenize import Number
+import imp
 from scraper import scrape
 from upload import upload_to_tiktok
+from utils import config
 
 async def main():
     # Fetching posts from r/AskReddit
@@ -50,7 +51,9 @@ async def main():
                     print("✅ Uploaded successfully!")
                 else:
                     print("❌ Failed to upload!")
-        except:
+        except Exception as e:
+            if config['debug']:
+                raise e
             pass
 
 if __name__ == '__main__':

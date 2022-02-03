@@ -1,7 +1,8 @@
-import time,re,utils,string
+import time,utils,string
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utils import config
 
 def scrape(post_url):
     bot = utils.create_bot(headless=True)
@@ -10,7 +11,7 @@ def scrape(post_url):
     try:
         # Load cookies to prevent cookie overlay & other issues
         bot.get('https://www.reddit.com')
-        for cookie in open('reddit.cookies','r').read().split('; '):
+        for cookie in config['reddit_cookies'].split('; '):
             cookie_data = cookie.split('=')
             bot.add_cookie({'name':cookie_data[0],'value':cookie_data[1],'domain':'reddit.com'})
         bot.get(post_url)
@@ -63,6 +64,8 @@ def scrape(post_url):
                 comments[i].screenshot(f'output/{i}.png')
                 data[str(i)] = ''.join(filter(lambda c: c in string.printable, text))
             except Exception as e:
+                if config['debug']:
+                    raise e
                 pass
 
         if bot.session_id:
@@ -71,4 +74,6 @@ def scrape(post_url):
     except Exception as e:
         if bot.session_id:
             bot.quit()
+        if config['debug']:
+            raise e
         return False

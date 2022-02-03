@@ -1,7 +1,15 @@
-import logging,os
+import logging,yaml
 from msedge.selenium_tools import EdgeOptions
 from msedge.selenium_tools import Edge
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
+config = yaml.safe_load(open('config.yaml').read())
+print(config)
+if not config['tiktok_cookies']:
+    raise Exception('Missing TikTok Cookies')
+
+if not config['reddit_cookies']:
+    raise Exception('Missing Reddit Cookies')
 
 def create_bot(headless=False):
     edge_options = EdgeOptions()

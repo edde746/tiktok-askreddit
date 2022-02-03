@@ -4,3 +4,4 @@ moviepy
 requests
 webdriver-manager
 msedge-selenium-tools
+pyyaml
