@@ -1,7 +1,6 @@
+undetected-chromedriver
 selenium
 edge-tts
 moviepy
 requests
-webdriver-manager
-msedge-selenium-tools
 pyyaml
