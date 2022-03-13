@@ -32,7 +32,7 @@ def upload_to_tiktok(name,title):
     bot.switch_to.frame(bot.find_element_by_tag_name("iframe"))
 
     # Upload video
-    file_uploader = WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.upload-btn-input')))
+    file_uploader = WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[type="file"]')))
     file_uploader.send_keys(os.getcwd()+f'\\render\\{name}.mp4')
 
     # Focus caption element
