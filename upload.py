@@ -28,34 +28,40 @@ def upload_to_tiktok(name,title):
     except:
         pass
 
-    bot.execute_script("document.querySelector('.cookie-banner').remove();")
     bot.switch_to.frame(bot.find_element_by_tag_name("iframe"))
+
+    # Wait for 1 second
+    time.sleep(1)
 
     # Upload video
     file_uploader = WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[type="file"]')))
-    file_uploader.send_keys(os.getcwd()+f'\\render\\{name}.mp4')
+    p = os.getcwd()+f'\\render\\{name}.mp4'
+    file_uploader.send_keys(p)
 
     # Focus caption element
     caption = WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.public-DraftStyleDefault-block.public-DraftStyleDefault-ltr')))
     ActionChains(bot).click(caption).perform()
 
     # Input title & tags
-    print("✍ Writing description & adding tags...")
-    try:
-        ActionChains(bot).send_keys(title+" ").perform()
-        tags = ["reddit","meme","askreddit","story","storytime","fyp"]
-        for tag in tags:
-            ActionChains(bot).send_keys("#"+tag).perform()
-            WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.mentionSuggestions')))
-            ActionChains(bot).send_keys(Keys.RETURN).perform()
-            time.sleep(0.05)
-    except:
-        pass
+    print('📝 Writing title & tags...')
+    if len(title) < 70:
+        try:
+            ActionChains(bot).send_keys(title+" ").perform()
+            tags = ["reddit","meme","askreddit","story","storytime","fyp"]
+            for tag in tags:
+                ActionChains(bot).send_keys("#"+tag).perform()
+                WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.mentionSuggestions')))
+                ActionChains(bot).send_keys(Keys.RETURN).perform()
+                time.sleep(0.05)
+        except:
+            pass
 
     try:
         print("⏱ Waiting to post...")
+        # Scroll to bottom to make sure post button is visible
+        bot.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         # Wait for 'Post' button to be active, then click
-        post = WebDriverWait(bot, 100).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.tiktok-btn-pc.tiktok-btn-pc-large.tiktok-btn-pc-primary:not(.tiktok-btn-pc-disabled)')))
+        post = WebDriverWait(bot, 300).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.btn-post>button:not([disabled])')))
         ActionChains(bot).move_to_element(post).perform()
         ActionChains(bot).click(post).perform()
 
