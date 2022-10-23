@@ -18,7 +18,7 @@ def scrape(post_url):
 
         # Fetching the post itself, text & screenshot
         post = WebDriverWait(bot, 20).until(EC.presence_of_element_located((By.CSS_SELECTOR, '.Post')))
-        post_text = post.find_element_by_css_selector('h1').text
+        post_text = post.find_element(By.CSS_SELECTOR, 'h1').text
         data['post'] = post_text
         post.screenshot('output/post.png')
 
@@ -27,7 +27,7 @@ def scrape(post_url):
         time.sleep(3)
 
         # Fetching comments & top level comment determinator
-        comments = bot.find_elements_by_css_selector('div[id^=t1_][tabindex]')
+        comments = bot.find_elements(By.CSS_SELECTOR, 'div[id^=t1_][tabindex]')
         allowed_style = comments[0].get_attribute("style")
         
         # Filter for top only comments
@@ -41,7 +41,7 @@ def scrape(post_url):
                 print('.',end="",flush=True)
                 # Filter out locked comments (AutoMod) 
                 try:
-                    comments[i].find_element_by_css_selector(".icon.icon-lock_fill")
+                    comments[i].find_element(By.CSS_SELECTOR, 'icon.icon-lock_fill')
                     continue
                 except:
                     pass
@@ -58,7 +58,7 @@ def scrape(post_url):
                 time.sleep(0.2)
 
                 # Getting comment into string
-                text = "\n".join([element.text for element in comments[i].find_elements_by_css_selector('.RichTextJSON-root')])
+                text = "\n".join([element.text for element in comments[i].find_elements(By.CSS_SELECTOR, '.RichTextJSON-root')])
 
                 # Screenshot & save text
                 comments[i].screenshot(f'output/{i}.png')
