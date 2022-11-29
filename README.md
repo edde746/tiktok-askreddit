@@ -11,3 +11,6 @@ Requires some manual setup,
    5. Repeat for Reddit, however there is no need to sign in, only accept cookies to get rid of notice (`reddit_cookies` this time)
 3. Add background video files to `backgrounds` folder, find some [here](https://www.pexels.com/videos/)
 3. Enjoy!
+
+# Unable to properly upload or want more advanced uploading features like audios?
+Check out my [tiktok-uploader](https://github.com/edde746/tiktok-uploader).
