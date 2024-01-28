@@ -45,13 +45,13 @@ async def main():
             # Render & Upload
             print("\n🎥 Rendering video...")
             video.render(name)
-            # if video.render(name):
-            #     # Upload video if rendered
-            #     print("🌟 Uploading to TikTok...")
-            #     if upload_to_tiktok(name,data["post"]):
-            #         print("✅ Uploaded successfully!")
-            #     else:
-            #         print("❌ Failed to upload!")
+            if video.render(name):
+                # Upload video if rendered
+                print("🌟 Uploading to TikTok...")
+                if upload_to_tiktok(name,data["post"]):
+                    print("✅ Uploaded successfully!")
+                else:
+                    print("❌ Failed to upload!")
         except Exception as e:
             if config['debug']:
                 raise e
