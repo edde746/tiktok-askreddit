@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from utils import config
 
 def scrape(post_url):
-    bot = utils.create_bot(headless=True)
+    bot = utils.create_bot(headless=False)
     data = {}
     
     try:
