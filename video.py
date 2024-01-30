@@ -17,7 +17,8 @@ def render(name):
     duration = 0
     for part in flow:
         sound_clips.append(AudioFileClip(f"output/{part}.mp3"))
-        image_clips.append(ImageClip(f"output/{part}.png").set_duration(sound_clips[-1].duration))
+       image_clips.append(ImageClip(f"output/{part}.png").set_duration(sound_clips[-1].duration).fx(vfx.resize,width=resolution[0]*0.9).set_position(("center","center")))
+
         duration += sound_clips[-1].duration
         # Ensure length of video
         if duration > 90:
@@ -39,5 +40,6 @@ def render(name):
     final = CompositeVideoClip([background, image_clips]).set_audio(sound_clips)
 
     # Save video
-    final.write_videofile(f"render/{name}.mp4", fps=30, threads=8, preset='ultrafast', audio_codec='aac', remove_temp=True)
+    final.write_videofile(f"render/{name}.mp4", fps=24, threads=8, preset='ultrafast', audio_codec='aac', remove_temp=True)
+
     return True

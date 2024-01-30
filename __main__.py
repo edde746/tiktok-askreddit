@@ -44,7 +44,6 @@ async def main():
 
             # Render & Upload
             print("\n🎥 Rendering video...")
-            video.render(name)
             if video.render(name):
                 # Upload video if rendered
                 print("🌟 Uploading to TikTok...")
